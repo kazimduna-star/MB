@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a1646">
+<title>MB Universe</title>
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+
+<!-- SVG-иконки -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sword" viewBox="0 0 64 64"><path d="M52 6 28 36l-4-4L48 8h4zM22 34l8 8-6 6-3-3-9 9-4-4 9-9-3-3z" fill="currentColor"/><circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 5"/></symbol>
+  <symbol id="i-jump" viewBox="0 0 64 64"><path d="M32 8 46 26H36v14H28V26H18zM20 48h24v6H20z" fill="currentColor"/></symbol>
+  <symbol id="i-dodge" viewBox="0 0 64 64"><path d="M10 14 40 32 10 50l8-18zM36 14l18 18-18 18 6-18z" fill="currentColor"/></symbol>
+  <symbol id="i-flower" viewBox="0 0 64 64"><path d="M32 6c5 8 5 14 0 20-5-6-5-12 0-20zm0 52c-5-8-5-14 0-20 5 6 5 12 0 20zM6 32c8-5 14-5 20 0-6 5-12 5-20 0zm52 0c-8 5-14 5-20 0 6-5 12-5 20 0zM13 13c9 0 14 3 17 9-7 1-13-1-17-9zm38 38c-9 0-14-3-17-9 7-1 13 1 17 9zM51 13c0 9-3 14-9 17-1-7 1-13 9-17zM13 51c0-9 3-14 9-17 1 7-1 13-9 17z" fill="currentColor"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 64 64"><path d="M32 6 54 14v18c0 12-9 21-22 26C19 53 10 44 10 32V14z" fill="currentColor"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 64 64"><path d="M22 30V12a4 4 0 0 1 8 0v14h2V8a4 4 0 0 1 8 0v18h2V14a4 4 0 0 1 8 0v26c0 12-8 20-18 20-8 0-14-5-18-14l-4-10a4 4 0 0 1 7-3z" fill="currentColor"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 64 64"><path d="M22 18v-4a6 6 0 0 1 6-6h8a6 6 0 0 1 6 6v4h8a4 4 0 0 1 4 4v28a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6V22a4 4 0 0 1 4-4zm6 0h8v-4h-8zM10 32h44v4H10z" fill="currentColor"/></symbol>
+  <symbol id="i-book" viewBox="0 0 64 64"><path d="M8 10h22c3 0 2 2 2 4v38c0-2-1-4-4-4H8zm48 0H34c-3 0-2 2-2 4v38c0-2 1-4 4-4h20z" fill="currentColor"/></symbol>
+  <symbol id="i-user" viewBox="0 0 64 64"><circle cx="32" cy="20" r="12" fill="currentColor"/><path d="M8 58c0-14 10-22 24-22s24 8 24 22z" fill="currentColor"/></symbol>
+  <symbol id="i-armor" viewBox="0 0 64 64"><path d="M18 8h8c2 4 4 6 6 6s4-2 6-6h8l10 10-6 8-6-3v33H20V23l-6 3-6-8z" fill="currentColor"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 64 64"><path d="M27 4h10l2 8 6 3 7-4 7 7-4 7 3 6 8 2v10l-8 2-3 6 4 7-7 7-7-4-6 3-2 8H27l-2-8-6-3-7 4-7-7 4-7-3-6-8-2V27l8-2 3-6-4-7 7-7 7 4 6-3zm5 19a9 9 0 1 0 0 18 9 9 0 0 0 0-18z" fill="currentColor" transform="scale(.9) translate(4 4)"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 64 64"><path d="M32 8C17 8 6 17 6 29c0 6 3 11 8 15l-2 12 12-6c3 1 5 1 8 1 15 0 26-9 26-22S47 8 32 8z" fill="currentColor"/></symbol>
+  <symbol id="i-help" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-width="5"/><path d="M24 25c0-5 4-8 8-8s8 3 8 8c0 6-8 6-8 13M32 44v5" stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="4"/><path d="M42 22 36 36 22 42l6-14z" fill="currentColor"/></symbol>
+  <symbol id="i-close" viewBox="0 0 64 64"><path d="M14 14 50 50M50 14 14 50" stroke="currentColor" stroke-width="7" stroke-linecap="round"/></symbol>
+</svg>
+
+<!-- ======== ЭКРАН ЗАГРУЗКИ ======== -->
+<div id="loading" class="screen">
+  <div class="load-bg"></div>
+  <div class="load-top">
+    <button class="top-btn" id="ldSettings"><svg><use href="#i-gear"/></svg><span>Настройки</span></button>
+    <button class="top-btn" id="ldAccount"><svg><use href="#i-user"/></svg><span>Аккаунт</span></button>
+    <button class="top-btn" id="ldHelp"><svg><use href="#i-help"/></svg><span>Помощь</span></button>
+  </div>
+  <div class="logo">
+    <div class="logo-title">MB <span>U</span>NIVERSE</div>
+    <div class="logo-sub">— Открой свой мир —</div>
+  </div>
+  <div class="load-bottom">
+    <div class="tip"><b>💡 Совет:</b><br><span id="tipText">Исследуйте мир, находите скрытые сундуки и открывайте новые возможности!</span></div>
+    <div class="bar"><div class="bar-fill" id="loadFill"></div><div class="bar-star" id="loadStar"></div></div>
+    <div class="load-text" id="loadText">Загрузка... 0%</div>
+    <button id="btnStart" class="start-btn hidden">Нажмите, чтобы начать</button>
+  </div>
+</div>
+
+<!-- ======== ИГРА ======== -->
+<canvas id="game"></canvas>
+
+<div id="hud" class="hidden">
+  <!-- Мини-карта и задание -->
+  <div class="mini-wrap">
+    <button class="avatar-btn" id="btnPlayerCard"><svg><use href="#i-user"/></svg><i class="dot"></i></button>
+    <div class="minimap"><canvas id="minimap" width="220" height="220"></canvas><i class="north">N</i></div>
+    <div class="mini-icons">
+      <button class="round" id="btnCenterMap"><svg><use href="#i-compass"/></svg></button>
+    </div>
+  </div>
+  <div class="quest" id="questBox">
+    <button class="quest-flag" id="btnQuest">!</button>
+    <div class="quest-text"><div id="questTitle">Победите манекен</div><div class="quest-dist" id="questDist">▲ 0 м</div></div>
+  </div>
+
+  <!-- Верхняя правая панель -->
+  <div class="top-right">
+    <div class="top-icons">
+      <button class="hud-icon" id="btnQuests"><svg><use href="#i-book"/></svg></button>
+      <button class="hud-icon" id="btnEquip"><svg><use href="#i-armor"/></svg></button>
+      <button class="hud-icon" id="btnInv"><svg><use href="#i-bag"/></svg></button>
+      <button class="hud-icon" id="btnChar"><svg><use href="#i-user"/></svg></button>
+      <button class="hud-icon" id="btnSettings"><svg><use href="#i-gear"/></svg></button>
+    </div>
+    <div class="fps"><i></i><span id="fpsText">-- fps</span></div>
+  </div>
+
+  <!-- Отряд -->
+  <div class="party">
+    <button class="slot active" data-slot="1"><b>Miku</b><i class="hp"><u id="partyHp1"></u></i><em>1</em></button>
+    <button class="slot locked" data-slot="2"><b>—</b><i class="hp"><u></u></i><em>2</em></button>
+    <button class="slot locked" data-slot="3"><b>—</b><i class="hp"><u></u></i><em>3</em></button>
+    <button class="slot locked" data-slot="4"><b>—</b><i class="hp"><u></u></i><em>4</em></button>
+  </div>
+
+  <!-- Джойстик -->
+  <div class="joy" id="joyBase"><i class="arr up"></i><i class="arr dn"></i><i class="arr lf"></i><i class="arr rt"></i><div class="knob" id="joyKnob"></div></div>
+
+  <!-- Здоровье -->
+  <div class="hpbar">
+    <span class="lvl" id="lvlText">Ур. 1</span>
+    <div class="hpbar-in"><div id="hpFill"></div><b id="hpText">18645 / 18645</b></div>
+    <div class="stam"><div id="stamFill"></div></div>
+  </div>
+
+  <!-- Кнопки действий -->
+  <div class="actions">
+    <button class="act jump" id="btnJump"><svg><use href="#i-jump"/></svg></button>
+    <button class="act atk" id="btnAttack"><svg><use href="#i-sword"/></svg></button>
+    <button class="act heavy" id="btnHeavy"><svg><use href="#i-flower"/></svg></button>
+    <button class="act dodge" id="btnDodge"><svg><use href="#i-dodge"/></svg></button>
+    <button class="act block" id="btnBlock"><svg><use href="#i-shield"/></svg></button>
+    <button class="act interact hidden" id="btnInteract"><svg><use href="#i-hand"/></svg><span id="interactLabel">F</span></button>
+  </div>
+
+  <button class="chat-btn" id="btnLog"><svg><use href="#i-chat"/></svg></button>
+  <div class="toast-box" id="toastBox"></div>
+  <div class="dmg-layer" id="dmgLayer"></div>
+</div>
+
+<!-- ======== МЕНЮ ======== -->
+<div id="overlay" class="overlay hidden">
+
+  <!-- Инвентарь -->
+  <section class="panel hidden" id="pInv">
+    <header><h2>Инвентарь</h2><button class="close" data-close><svg><use href="#i-close"/></svg></button></header>
+    <nav class="tabs" id="invTabs">
+      <button data-cat="weapon" class="on">Оружие</button>
+      <button data-cat="armor">Броня</button>
+      <button data-cat="shield">Щиты</button>
+      <button data-cat="material">Материалы</button>
+      <button data-cat="other">Другое</button>
+    </nav>
+    <div class="inv-body">
+      <div class="grid" id="invGrid"></div>
+      <aside class="detail" id="invDetail">
+        <canvas id="invPreview" width="320" height="320"></canvas>
+        <h3 id="dName">Выберите предмет</h3>
+        <div class="rar" id="dRarity"></div>
+        <p id="dType"></p>
+        <ul id="dStats"></ul>
+        <p class="desc" id="dDesc"></p>
+        <div class="btns">
+          <button class="main" id="dEquip">Экипировать</button>
+          <button id="dUnequip">Снять</button>
+          <button id="dView">Просмотр</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Экипировка -->
+  <section class="panel hidden" id="pEquip">
+    <header><h2>Экипировка</h2><button class="close" data-close><svg><use href="#i-close"/></svg></button></header>
+    <div class="eq-body">
+      <div class="eq-col" id="eqLeft"></div>
+      <div class="eq-center"><canvas id="eqPreview" width="400" height="560"></canvas>
+        <div class="eq-hint">Перетащите, чтобы повернуть</div></div>
+      <div class="eq-col" id="eqRight"></div>
+    </div>
+  </section>
+
+  <!-- Персонаж -->
+  <section class="panel small hidden" id="pChar">
+    <header><h2>Персонаж</h2><button class="close" data-close><svg><use href="#i-close"/></svg></button></header>
+    <div class="char-body">
+      <h3>Miku</h3>
+      <div class="stat-list" id="charStats"></div>
+    </div>
+  </section>
+
+  <!-- Настройки -->
+  <section class="panel small hidden" id="pSettings">
+    <header><h2>Настройки</h2><button class="close" data-close><svg><use href="#i-close"/></svg></button></header>
+    <div class="set-body">
+      <label>Качество графики
+        <select id="setQuality"><option value="low">Низкое</option><option value="mid" selected>Среднее</option><option value="high">Высокое</option></select></label>
+      <label class="row">Тени <input type="checkbox" id="setShadows" checked></label>
+      <label class="row">Показывать FPS <input type="checkbox" id="setFps" checked></label>
+      <label class="row">Инвертировать камеру по Y <input type="checkbox" id="setInvert"></label>
+      <label>Чувствительность камеры <input type="range" id="setSens" min="50" max="200" value="100"></label>
+      <label>Размер кнопок <input type="range" id="setBtn" min="80" max="130" value="100"></label>
+      <button class="main" id="setReset">Сбросить настройки</button>
+    </div>
+  </section>
+
+  <!-- Журнал -->
+  <section class="panel small hidden" id="pQuests">
+    <header><h2>Задания</h2><button class="close" data-close><svg><use href="#i-close"/></svg></button></header>
+    <div class="set-body" id="questList"></div>
+  </section>
+
+  <!-- Журнал событий -->
+  <section class="panel small hidden" id="pLog">
+    <header><h2>Журнал</h2><button class="close" data-close><svg><use href="#i-close"/></svg></button></header>
+    <div class="set-body log" id="logList"></div>
+  </section>
+
+  <!-- Аккаунт -->
+  <section class="panel small hidden" id="pAccount">
+    <header><h2>Аккаунт</h2><button class="close" data-close><svg><use href="#i-close"/></svg></button></header>
+    <div class="set-body">
+      <label>Имя игрока <input type="text" id="accName" maxlength="16" placeholder="Путешественник"></label>
+      <button class="main" id="accSave">Сохранить</button>
+      <button id="accClear">Удалить сохранение</button>
+    </div>
+  </section>
+
+  <!-- Помощь -->
+  <section class="panel small hidden" id="pHelp">
+    <header><h2>Управление</h2><button class="close" data-close><svg><use href="#i-close"/></svg></button></header>
+    <div class="set-body help">
+      <h4>Компьютер</h4>
+      <p>W A S D — движение · Shift — ускорение · Пробел — прыжок<br>
+      ЛКМ — атака · ПКМ — блок · Q — сильная атака<br>
+      Ctrl — уклонение · F — взаимодействие<br>
+      I — инвентарь · E — экипировка · C — персонаж · Esc — меню</p>
+      <h4>Телефон</h4>
+      <p>Левый джойстик — движение · Свайп справа — камера<br>
+      Кнопки справа — действия</p>
+    </div>
+  </section>
+
+  <!-- Просмотр 3D -->
+  <section class="panel small hidden" id="pView">
+    <header><h2 id="viewTitle">Просмотр</h2><button class="close" data-close><svg><use href="#i-close"/></svg></button></header>
+    <canvas id="viewCanvas" width="520" height="520"></canvas>
+  </section>
+</div>
+
+<div id="errorBox" class="error hidden"></div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
